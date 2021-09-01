@@ -24,7 +24,7 @@ function createCard(el) {
   let p = document.createElement("p");
   p.innerText = `Releasing Year: ${el.Year}`;
   let rating = document.createElement("h4");
-  rating.innerText = `Rating: ${el.Ratings[0].Value}`;
+  rating.innerText = `IMDB Rating: ${el.imdbRating}`;
   let lead_actors = document.createElement("p");
   lead_actors.innerText = `Actors: ${el.Actors}`;
   con_div.append(h2, p, rating, lead_actors);
@@ -58,7 +58,7 @@ const getData = async () => {
       `https://www.omdbapi.com/?t=${movie}&apikey=e37dcc9e`
     );
     let data = await res.json();
-    // console.log(data);
+    console.log(data);
     if (data.Response === "False") {
       createError();
     } else {
