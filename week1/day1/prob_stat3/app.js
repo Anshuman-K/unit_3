@@ -25,11 +25,11 @@ function createCard(el) {
   p.innerText = `Releasing Year: ${el.Year}`;
   let rating = document.createElement("h4");
   rating.innerText = `IMDB Rating: ${el.imdbRating}`;
-  let head;
+  let head = document.createElement("h1");
+  head.innerText = "";
   console.log(el.imdbRating);
   if (el.imdbRating > 8.5) {
     console.log("Hello");
-    head = document.createElement("h1");
     head.innerText = "Recommended!";
     head.style.color = "Green";
   }
