@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Youtube Search 2</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* background-color: #f9f9f9; */
+      }
+      #navbar {
+        width: 100%;
+        padding: 1% 2%;
+        height: 55px;
+        display: flex;
+        justify-content: space-between;
+        background-color: white;
+        position: fixed;
+        /* border-bottom: 1px solid black; */
+      }
+      #navbar > div:first-child {
+        display: flex;
+        align-items: center;
+        width: 10%;
+      }
+      #navbar > div:first-child h1 {
+        letter-spacing: -2px;
+      }
+      #navbar > div:nth-child(2) {
+        width: 50%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+      }
+      #navbar input {
+        width: 78%;
+        height: 30px;
+        padding: 1% 2%;
+        padding-right: 0;
+        outline: none;
+        margin-right: 0;
+      }
+      #navbar input:focus {
+        border: 1px solid rgb(43, 43, 207);
+      }
+      #navbar button {
+        width: 10%;
+        margin-left: 0;
+        height: 30px;
+        cursor: pointer;
+      }
+
+      #navbar > div:nth-child(3) {
+        width: 20%;
+        display: flex;
+        align-items: center;
+      }
+
+      #navbar > div:nth-child(3) i {
+        margin-right: 10%;
+      }
+      #videos {
+        width: 100%;
+        padding: 8% 5%;
+        height: 100vh;
+        background-color: #f9f9f9;
+        display: grid;
+        gap: 5%;
+        grid-template-columns: repeat(3, 1fr);
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div id="navbar">
+        <div>
+          <img src="./youtube_icon.svg" alt="" width="36px" />
+          <h1>YouTube</h1>
+        </div>
+        <div>
+          <input type="text" id="video_name" placeholder="Search" />
+          <button onclick="getVideo()" title="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div>
+          <i class="far fa-bell"></i>
+          <i class="fas fa-video"></i>
+          <i class="far fa-bell"></i>
+        </div>
+      </div>
+    </nav>
+
+    <!-- <section>
+      <div id="videos"></div>
+    </section> -->
+
+    <script>
+      function removeExist() {
+        if (document.querySelector("#videos") != null) {
+          document.querySelector("#videos").remove();
+        }
+      }
+
+      async function getVideo() {
+        removeExist();
+        let body = document.body;
+        let videos_div = document.createElement("div");
+        videos_div.setAttribute("id", "videos");
+        body.append(videos_div);
+
+        let video = document.getElementById("video_name").value;
+        console.log(video);
+        let res = await fetch(
+          `https://youtube.googleapis.com/youtube/v3/search?q=${video}&type=video&key=AIzaSyBWW-Zg1Tx7JJQdrjKRl2C2t4JKMP2yB38&maxResults=20`
+        );
+
+        let data = await res.json();
+        console.log(data);
+        for (let {
+          id: { videoId },
+        } of data.items) {
+          let videoFrame = document.createElement("iframe");
+          videoFrame.setAttribute(
+            "src",
+            `https://www.youtube.com/embed/${videoId}`
+          );
+          videoFrame.setAttribute("allowfullscreen", "");
+          document.querySelector("#videos").appendChild(videoFrame);
+        }
+      }
+
+      async function popVideo() {
+        let body = document.body;
+        let videos_div = document.createElement("div");
+        videos_div.setAttribute("id", "videos");
+        body.append(videos_div);
+        let video = document.getElementById("video_name").value;
+        console.log(video);
+        let res = await fetch(
+          `https://youtube.googleapis.com/youtube/v3/videos?chart=mostPopular&type=video&locale=India&regionCode=In&key=AIzaSyBWW-Zg1Tx7JJQdrjKRl2C2t4JKMP2yB38&maxResults=20`
+        );
+
+        let data = await res.json();
+        console.log(data);
+        for (let { id } of data.items) {
+          let videoFrame = document.createElement("iframe");
+          videoFrame.setAttribute("src", `https://www.youtube.com/embed/${id}`);
+          videoFrame.setAttribute("allowfullscreen", "");
+          document.querySelector("#videos").appendChild(videoFrame);
+        }
+      }
+
+      popVideo();
+    </script>
+  </body>
+</html>
