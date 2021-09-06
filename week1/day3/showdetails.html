@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Roboto", sans-serif;
+        background: black;
+        color: #f73636;
+      }
+      #outside {
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+      #inside {
+        /* display: flex; */
+        width: 40%;
+        height: 300px;
+        border: 1px solid black;
+        padding: 1% 4%;
+        text-align: center;
+      }
+      #details {
+        display: flex;
+        justify-content: space-between;
+        margin: 10% 1%;
+      }
+      #details > div {
+        border: 1px solid #f73636;
+        padding: 5% 7%;
+        border-radius: 8px;
+      }
+      #details > div:hover {
+        border: 1px solid white;
+        transition: all 0.3s ease-in-out;
+      }
+      #details > div:hover p {
+        color: white !important;
+        transition: all 0.2s ease-in-out;
+      }
+      #details > div:hover span {
+        color: white !important;
+        transition: all 0.2s ease-in-out;
+      }
+      #details > div p {
+        margin: 12% 0;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+      }
+
+      #details > div p:not(:first-child) {
+        font-size: 13px;
+      }
+      #name:hover {
+        color: white;
+      }
+      button {
+        outline: none;
+        background: none;
+        border: 1px solid #f73636;
+        font-size: 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        padding: 1.5% 2.5%;
+      }
+      button:hover {
+        border: 1px solid white;
+        color: white;
+        transition: all 0.1s ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="outside">
+      <div id="inside">
+        <h1 id="name"></h1>
+        <div id="details">
+          <div>
+            <p>Personal Info</p>
+            <p>Birth Year: <span id="b_year"></span></p>
+            <p>Gender:<span id="gender"></span></p>
+            <p>Height: <span id="height"></span></p>
+          </div>
+          <div>
+            <p>Anatomy</p>
+            <p>Eye Color: <span id="e_color"></span></p>
+            <p>Mass:<span id="mass"></span></p>
+            <p>Hair Color: <span id="h_color"></span></p>
+          </div>
+        </div>
+        <button id="goBack">Go Back</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  if (localStorage.getItem("starCharacterInfo") == null) {
+    location.href = "./starwarsapp.html";
+  }
+  let data = JSON.parse(localStorage.getItem("starCharacterInfo"));
+
+  let title = document.title;
+  title.innerText = data.name;
+
+  let name = document.getElementById("name");
+  name.innerText = data.name;
+  let p1 = document.getElementById("b_year");
+  p1.innerText = ` ${data.birth_year}`;
+  let p2 = document.getElementById("gender");
+  p2.innerText = ` ${data.gender}`;
+  let p3 = document.getElementById("height");
+  p3.innerText = ` ${data.height}`;
+  let p4 = document.getElementById("e_color");
+  p4.innerText = ` ${data.eye_color}`;
+  let p5 = document.getElementById("mass");
+  p5.innerText = ` ${data.mass}`;
+  let p6 = document.getElementById("h_color");
+  p6.innerText = ` ${data.hair_color}`;
+
+  let back = document.getElementById("goBack");
+  back.addEventListener("click", () => {
+    console.log("hello");
+    localStorage.removeItem("starCharacterInfo");
+    location.href = "./starwarsapp.html";
+  });
+  console.log(data);
+</script>

@@ -1,0 +1,34 @@
+#navbar {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding-left: 4%;
+    padding-right: 4%;
+
+    border: solid 1px black;
+}
+
+#options {
+    display: flex;
+    justify-content: space-between;
+}
+
+#options h3 {
+    padding-left: 30px;
+    padding-right: 10px;
+}
+
+#data {
+    width: 80%;
+    margin: auto;
+    display: grid;
+    gap: 5%;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#data img {
+    width: 80%;
+    object-fit: contain;
+    height: 400px;
+}
