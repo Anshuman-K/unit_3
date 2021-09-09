@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Recipe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div id="cont"></div>
+    <!-- <div id="data"></div> -->
+  </body>
+</html>
+
+<script type="module">
+  import navbar from "./components/navbar.js";
+  let div = document.createElement("div");
+  div.setAttribute("id", "topnav");
+  div.innerHTML = navbar();
+  document.body.prepend(div);
+
+  let main_div = document.getElementById("cont");
+
+  let search = document.getElementById("food_name");
+  search.addEventListener("input", () => {
+    debounce(getvalue, 500);
+  });
+
+  let timerId;
+
+  function noSearchFound() {
+    let p = document.createElement("p");
+    p.setAttribute("id", "nosearch");
+    p.innerText = "No search found. Try again..";
+    main_div.append(p);
+  }
+
+  function removePrev() {
+    let data = document.getElementById("data");
+    if (data !== null) {
+      data.remove();
+    }
+
+    if (document.getElementById("nosearch") !== null) {
+      document.getElementById("nosearch").remove();
+    }
+  }
+
+  function append(results) {
+    let data = document.createElement("div");
+    data.setAttribute("id", "data");
+    main_div.append(data);
+
+    results.forEach(({ strMealThumb, strMeal, strCategory, strArea }) => {
+      let div = document.createElement("div");
+      let div1 = document.createElement("div");
+      let img = document.createElement("img");
+      img.src = strMealThumb;
+
+      let div2 = document.createElement("div");
+      let h3 = document.createElement("h3");
+      h3.innerText = strMeal;
+      let p = document.createElement("p");
+      p.innerText = strCategory;
+      let p1 = document.createElement("p");
+      p1.innerText = strArea;
+
+      div.append(div1, div2);
+      div1.append(img);
+      div2.append(h3, p, p1);
+      data.append(div);
+    });
+  }
+
+  async function getResults(name) {
+    let res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`
+    );
+    let data = await res.json();
+    return data.meals;
+  }
+
+  async function getvalue() {
+    let name = document.getElementById("food_name").value;
+    if (name.length === 0) return false;
+    let results = await getResults(name);
+    // console.log(results);
+    if (results === null) {
+      removePrev();
+      noSearchFound();
+      return false;
+    }
+    append(results);
+  }
+
+  function debounce(func, delay) {
+    let name = document.getElementById("food_name").value;
+    if (name.length < 1) {
+      removePrev();
+    }
+
+    let data = document.getElementById("data");
+    if (data !== null) {
+      if (data) {
+        data.remove();
+      }
+    }
+
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+
+    timerId = setTimeout(() => {
+      func();
+    }, delay);
+  }
+</script>
