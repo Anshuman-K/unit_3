@@ -1,0 +1,43 @@
+#main {
+    padding-top: 65px;
+    width: 90%;
+    margin: auto;
+    color: rgb(90, 88, 88);
+}
+
+#cont {
+    padding-top: 10px;
+    display: flex;
+}
+
+#cont>div {
+    width: 50%;
+    height: 450px;
+    padding: 1% 1%;
+}
+
+#cont>div:last-child {
+    padding-top: 4%;
+}
+
+#m_name {
+    color: rgb(46, 253, 233);
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#cont>div:last-child p {
+    padding: 1% 0;
+    color: rgb(39, 38, 38);
+    font-weight: bold;
+}
+
+#m_cat,
+#m_area,
+#m_desc {
+    color: rgb(102, 99, 99);
+}

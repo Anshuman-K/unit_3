@@ -12,11 +12,57 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/feature.css" />
   </head>
-  <body></body>
+  <body>
+    <div id="main">
+      <h1>Receipe of the Day: <span id="m_name"></span></h1>
+      <div id="cont">
+        <div id="l_div"></div>
+        <div class="r_div">
+          <p>Category: <span id="m_cat"></span></p>
+          <p>Streat Area: <span id="m_area"></span></p>
+          <p>Instructions: <span id="m_desc"></span></p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
 
 <script type="module">
   import navbar from "./components/navbar.js";
-  document.body.innerHTML = navbar();
+  let div = document.createElement("div");
+  div.setAttribute("id", "topnav");
+  div.innerHTML = navbar();
+  document.body.prepend(div);
+
+  function addData({
+    strMealThumb,
+    strMeal,
+    strCategory,
+    strArea,
+    strInstructions,
+  }) {
+    let l_div = document.getElementById("l_div");
+    let img = document.createElement("img");
+    img.src = strMealThumb;
+    l_div.append(img);
+
+    let m_name = document.getElementById("m_name");
+    m_name.innerText = strMeal;
+    let m_cat = document.getElementById("m_cat");
+    m_cat.innerText = strCategory;
+    let m_area = document.getElementById("m_area");
+    m_area.innerText = strArea;
+    let m_desc = document.getElementById("m_desc");
+    m_desc.innerText = `${strInstructions}`;
+  }
+
+  async function getData() {
+    let res = await fetch(`https://www.themealdb.com/api/json/v1/1/random.php`);
+    let data = await res.json();
+    addData(data.meals[0]);
+  }
+
+  getData();
 </script>

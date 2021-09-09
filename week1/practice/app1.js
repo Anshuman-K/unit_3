@@ -72,21 +72,29 @@
 
 // https://youtube.googleapis.com/youtube/v3/search?part=tesla&key=[YOUR_API_KEY]
 
-async function getVideo() {
-  let video = document.getElementById("video").value;
+// async function getVideo() {
+//   let video = document.getElementById("video").value;
 
-  let res = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/search?q=${video}$type=video&key=AIzaSyBc1vvVaO2HCoxToEX18cCYrDQ-R3-y4v0&maxResults=20`
-  );
+//   let res = await fetch(
+//     `https://youtube.googleapis.com/youtube/v3/search?q=${video}$type=video&key=AIzaSyBc1vvVaO2HCoxToEX18cCYrDQ-R3-y4v0&maxResults=20`
+//   );
 
+//   let data = await res.json();
+//   console.log(data);
+//   for (let {
+//     id: { videoId },
+//   } of data.items) {
+//     let videoFrame = document.createElement("iframe");
+//     videoFrame.setAttribute("src", `https://www.youtube.com/embed/${videoId}`);
+//     videoFrame.setAttribute("allowfullscreen", "");
+//     document.querySelector("#video-div").appendChild(videoFrame);
+//   }
+// }
+
+async function getData() {
+  let res = await fetch(`www.themealdb.com/api/json/v1/1/random.php`);
   let data = await res.json();
   console.log(data);
-  for (let {
-    id: { videoId },
-  } of data.items) {
-    let videoFrame = document.createElement("iframe");
-    videoFrame.setAttribute("src", `https://www.youtube.com/embed/${videoId}`);
-    videoFrame.setAttribute("allowfullscreen", "");
-    document.querySelector("#video-div").appendChild(videoFrame);
-  }
 }
+
+getData();
